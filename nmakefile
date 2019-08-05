@@ -7,11 +7,11 @@ WINDRES =	rc
 
 ZLIB = zlib
 
-CXXFLAGS =  -nologo -O2 -MT -GL -DNDEBUG -D_WIN32_WINNT=0x0501
+CXXFLAGS =  -nologo -arch:IA32 -O2 -MT -DNDEBUG -D_WIN32_WINNT=0x0501
 
-CFLAGS	=	-nologo -O2 -MT -GL -DNDEBUG -D_WIN32_WINNT=0x0501 -DOEMRESOURCE -D__fastcall="" -D__inline__=__inline -DF_OK=0 -I$(ZLIB)
+CFLAGS	=	-nologo -arch:IA32 -O2 -MT -DNDEBUG -D_WIN32_WINNT=0x0501 -DOEMRESOURCE -D__fastcall="" -D__inline__=__inline -DF_OK=0 -I$(ZLIB)
 
-LFLAGS	=	-nologo -LTCG -SUBSYSTEM:Windows,"5.01"
+LFLAGS	=	-nologo -SUBSYSTEM:Windows,"5.01"
  
 TARGET	=	meisei-vc.exe
 
@@ -45,6 +45,7 @@ OBJS	=	am29f040b.obj \
 			tape.obj \
 			tileview.obj \
 			tool.obj \
+			update.obj \
 			version.obj \
 			vdp.obj \
 			z80.obj \
@@ -68,7 +69,13 @@ OBJS	=	am29f040b.obj \
 			$(ZLIB)\uncompr.obj \
 			$(ZLIB)\zutil.obj
 
-LIBS	=   kernel32.lib comdlg32.lib user32.lib gdi32.lib comctl32.lib shell32.lib winmm.lib ddraw.lib dinput.lib dsound.lib dinput8.lib dxguid.lib ole32.lib 
+LIBS	=   kernel32.lib comdlg32.lib user32.lib gdi32.lib comctl32.lib shell32.lib winmm.lib wininet.lib ddraw.lib dinput.lib dsound.lib dinput8.lib dxguid.lib ole32.lib 
+
+!IFDEF LTCG
+CXXFLAGS = $(CXXFLAGS) -GL
+CFLAGS = $(CFLAGS) -GL
+LFLAGS = $(LFLAGS) -LTCG
+!ENDIF
 
 .SUFFIXES: .c.o
 .SUFFIXES: .cpp.o

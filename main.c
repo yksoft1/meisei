@@ -320,7 +320,7 @@ int WINAPI WinMain(HINSTANCE inst,HINSTANCE prev,LPSTR arg,int show)
 	ShowWindow(MAIN->window,show);
 	UpdateWindow(MAIN->window);
 	
-	LOG(LOG_MISC|LOG_COLOUR(LC_PINK),"Welcome to %s %s, © %s\n",version_get(VERSION_NAME),version_get(VERSION_NUMBER),version_get(VERSION_AUTHOR));
+	LOG(LOG_MISC|LOG_COLOUR(LC_PINK),"Welcome to %s %s, (C)%s\n",version_get(VERSION_NAME),version_get(VERSION_NUMBER),version_get(VERSION_AUTHOR));
 	
 	if (draw_get_fullscreen_set()) draw_switch_screenmode();
 	draw_draw();
