@@ -1,0 +1,91 @@
+CC		=	cl
+CXX		=   cl
+LD		= 	link
+LIBR	=	lib
+WINDRES =	rc
+
+
+ZLIB = zlib
+
+CXXFLAGS =  -nologo -O2 -MT -GL -DNDEBUG -D_WIN32_WINNT=0x0501
+
+CFLAGS	=	-nologo -O2 -MT -GL -DNDEBUG -D_WIN32_WINNT=0x0501 -DOEMRESOURCE -D__fastcall="" -D__inline__=__inline -DF_OK=0 -I$(ZLIB)
+
+LFLAGS	=	-nologo -LTCG -SUBSYSTEM:Windows,"5.01"
+ 
+TARGET	=	meisei-vc.exe
+
+OBJS	=	am29f040b.obj \
+			cont.obj \
+			crystal.obj \
+			draw.obj \
+			file.obj \
+			help.obj \
+			input.obj \
+			io.obj \
+			log.obj \
+			main.obj \
+			mapper.obj \
+			media.obj \
+			movie.obj \
+			msx.obj \
+			netplay.obj \
+			paste.obj \
+			psg.obj \
+			psglogger.obj \
+			psgtoy.obj \
+			reverse.obj \
+			sample.obj \
+			scc.obj \
+			screenshot.obj \
+			settings.obj \
+			sound.obj \
+			spriteview.obj \
+			state.obj \
+			tape.obj \
+			tileview.obj \
+			tool.obj \
+			version.obj \
+			vdp.obj \
+			z80.obj \
+			ti_ntsc.obj \
+			ioapi.obj \
+			unzip.obj \
+			resource.res \
+			$(ZLIB)\adler32.obj \
+			$(ZLIB)\compress.obj \
+			$(ZLIB)\crc32.obj \
+			$(ZLIB)\deflate.obj \
+			$(ZLIB)\gzclose.obj \
+			$(ZLIB)\gzlib.obj \
+			$(ZLIB)\gzread.obj \
+			$(ZLIB)\gzwrite.obj \
+			$(ZLIB)\infback.obj \
+			$(ZLIB)\inffast.obj \
+			$(ZLIB)\inflate.obj \
+			$(ZLIB)\inftrees.obj \
+			$(ZLIB)\trees.obj \
+			$(ZLIB)\uncompr.obj \
+			$(ZLIB)\zutil.obj
+
+LIBS	=   kernel32.lib comdlg32.lib user32.lib gdi32.lib comctl32.lib shell32.lib winmm.lib ddraw.lib dinput.lib dsound.lib dinput8.lib dxguid.lib ole32.lib 
+
+.SUFFIXES: .c.o
+.SUFFIXES: .cpp.o
+
+all: $(TARGET)
+
+$(TARGET):	$(OBJS)
+	$(LD) $(LFLAGS) -OUT:$@ $(OBJS) $(LIBS)
+
+.c.obj:
+	$(CC) $(CFLAGS) -c -Fo$@ $<
+
+.cpp.obj:
+	$(CXX) $(CXXFLAGS) -c -Fo$@ $<
+
+.rc.res: 
+	$(WINDRES) -fo $@ $< 
+	
+clean:
+	del $(TARGET) $(OBJS)
